@@ -17,7 +17,6 @@ class ExampleEndpoint extends Endpoint {
   // passwords, and information about the request being made to the server.
   Future<String> hello(Session session, String name) async {
     print(await session.auth.authenticatedUserId);
-    print("hi");
     session.serverpod.futureCallWithDelay(
         "ExampleFutureCall", null, Duration(minutes: 3, seconds: 2));
 

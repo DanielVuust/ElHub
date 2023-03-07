@@ -15,6 +15,5 @@ class ExampleFutureCall extends FutureCall {
   @override
   Future<void> invoke(Session session, SerializableEntity? object) async {
     // Do something interesting in the future here.
-    print("YOOOOOOOO ITS HEWEE");
   }
 }
