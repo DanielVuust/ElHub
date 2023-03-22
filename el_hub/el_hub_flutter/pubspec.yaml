@@ -28,12 +28,16 @@ dependencies:
   el_hub_client:
     path: ../el_hub_client
   serverpod_auth_shared_flutter: ^1.0.0
-  serverpod_auth_email_flutter: ^1.0.0
+  serverpod_auth_email_flutter: ^1.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  bloc: ^8.1.1
+  logger: ^1.3.0
+  flutter_bloc: ^8.1.2
+  convex_bottom_bar: ^3.2.0
 
 dev_dependencies:
   flutter_lints: ^2.0.1
