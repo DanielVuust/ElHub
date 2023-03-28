@@ -31,18 +31,6 @@ class _EndpointLoginStatus extends _i1.EndpointRef {
 
   @override
   String get name => 'loginStatus';
-
-  _i2.Future<bool> logoutUser() => caller.callServerEndpoint<bool>(
-        'loginStatus',
-        'logoutUser',
-        {},
-      );
-
-  _i2.Future<bool> isUserLoggedIn() => caller.callServerEndpoint<bool>(
-        'loginStatus',
-        'isUserLoggedIn',
-        {},
-      );
 }
 
 class _EndpointPowerInstallation extends _i1.EndpointRef {

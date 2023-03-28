@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
+import '../utility/logging/logger.dart';
 
 import 'bloc/power_installations_bloc.dart';
 
@@ -17,7 +18,7 @@ import 'bloc/power_installations_bloc.dart';
 // the default port. You will need to modify this to connect to staging or
 // production servers.
 var client = Client(
-  'http://localhost:8080/',
+  'http://10.0.2.2:8079/',
   authenticationKeyManager: FlutterAuthenticationKeyManager(),
 )..connectivityMonitor = FlutterConnectivityMonitor();
 var sessionManager = SessionManager(
@@ -29,49 +30,59 @@ void main() async {
 
   await sessionManager.initialize();
 
-  runApp(MyWidget());
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider<PowerInstallationsBloc>(
+      create: (context) => PowerInstallationsBloc(),
+    ),
+  ], child: MyWidget()));
 }
 
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
+class MyWidget extends StatefulWidget {
+  MyWidget({super.key});
+  late bool isUserLoggedIn = sessionManager.isSignedIn;
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
 
+class _MyWidgetState extends State<MyWidget> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PowerInstallationsBloc(),
-      child: MaterialApp(
+    return MaterialApp(
         title: 'El Hub Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
         routes: appRoutes,
-        home: FutureBuilder<bool>(
-          future: client.loginStatus.isUserLoggedIn(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if (!snapshot.hasData) {
-              return const CircularProgressIndicator();
-            } else if (!snapshot.data!) {
-              return const SignInScreen();
-            } else {
-              return MyApp();
+        home: Builder(
+          builder: (BuildContext context) {
+            if (sessionManager.isSignedIn) {
+              return MyApps();
             }
+            return const SignInScreen();
           },
-        ),
-      ),
-    );
+        )
+      );
+  }
+
+  void initState() {
+    super.initState();
+    sessionManager.addListener(() {
+      setState(() {
+        widget.isUserLoggedIn = sessionManager.isSignedIn;
+      });
+    });
   }
 }
 
-class MyApp extends StatefulWidget {
-  MyApp({Key? key}) : super(key: key);
+class MyApps extends StatefulWidget {
+  MyApps({Key? key}) : super(key: key);
 
+  int selectedpage = 1;
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<MyApps> createState() => _MyAppsState();
 }
 
-class _MyAppState extends State<MyApp> {
-  int selectedpage = 1;
-
+class _MyAppsState extends State<MyApps> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,12 +99,12 @@ class _MyAppState extends State<MyApp> {
         initialActiveIndex: 1,
         onTap: (int i) {
           setState(() {
-            selectedpage = i;
+            widget.selectedpage = i;
           });
         },
       ),
       body: IndexedStack(
-        index: selectedpage,
+        index: widget.selectedpage,
         children: const [UserScreen(), HomeScreen()],
       ),
     );

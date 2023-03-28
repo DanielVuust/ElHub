@@ -6,22 +6,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../main.dart';
 import '../widgets/home/home_header.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
   Widget build(BuildContext context) {
-    BlocProvider.of<PowerInstallationsBloc>(context)
-        .eventSink
-        .add(PowerInstallationsEventLoad());
+    
         
     return Scaffold(
         appBar: AppBar(title: const Text("El Hub")),
         body: Center(
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            const HomeHeaderWidget(),
+            Column(crossAxisAlignment: CrossAxisAlignment.center, children: const [
+            HomeHeaderWidget(),
           ]),
         ));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<PowerInstallationsBloc>(context)
+        .eventSink
+        .add(PowerInstallationsEventLoad());
   }
 }

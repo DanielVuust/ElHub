@@ -1,8 +1,6 @@
 example:
   - hello:
 loginStatus:
-  - logoutUser:
-  - isUserLoggedIn:
 powerInstallation:
   - getUsersPowerInstallations:
   - hello:

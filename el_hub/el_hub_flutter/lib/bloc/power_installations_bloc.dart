@@ -16,7 +16,7 @@ class PowerInstallationsBloc extends Bloc<PowerInstallationsEvent, PowerInstalla
   StreamSink<PowerInstallationsState> get _currentUserPowerInstallationsState =>
       _powerInstallationsStateController.sink;
 
-  Stream<PowerInstallationsState> get group {
+  Stream<PowerInstallationsState> get powerInstallationStateStream {
     return _powerInstallationsStateController.stream;
   }
 
