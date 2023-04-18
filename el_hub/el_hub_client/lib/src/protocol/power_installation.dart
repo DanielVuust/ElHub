@@ -6,6 +6,7 @@
 // ignore_for_file: implementation_imports
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:serverpod_auth_client/module.dart';
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 
@@ -14,7 +15,8 @@ class PowerInstallation extends _i1.SerializableEntity {
     this.id,
     required this.name,
     this.type,
-    required this.owners,
+    this.owners,
+    this.powerReadIntervals,
   });
 
   factory PowerInstallation.fromJson(
@@ -27,7 +29,10 @@ class PowerInstallation extends _i1.SerializableEntity {
       type:
           serializationManager.deserialize<String?>(jsonSerialization['type']),
       owners: serializationManager
-          .deserialize<List<_i2.User>>(jsonSerialization['owners']),
+          .deserialize<List<UserInfo>?>(jsonSerialization['owners']),
+      powerReadIntervals:
+          serializationManager.deserialize<List<_i2.PowerReadInterval>?>(
+              jsonSerialization['powerReadIntervals']),
     );
   }
 
@@ -40,7 +45,9 @@ class PowerInstallation extends _i1.SerializableEntity {
 
   String? type;
 
-  List<_i2.User> owners;
+  List<UserInfo>? owners;
+
+  List<_i2.PowerReadInterval>? powerReadIntervals;
 
   @override
   Map<String, dynamic> toJson() {
@@ -49,6 +56,7 @@ class PowerInstallation extends _i1.SerializableEntity {
       'name': name,
       'type': type,
       'owners': owners,
+      'powerReadIntervals': powerReadIntervals,
     };
   }
 }

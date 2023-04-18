@@ -2,5 +2,7 @@ class: PowerReadInterval
 table: power_read_interval
 fields:
   powerInstallationId: int, parent=power_installation
-  intervalInSeconds: int
+  lengthInSeconds: int
   powerInKilowatts: int
+  powerReadIntervalStart: DateTime
+  powerReadIntervalEnd: DateTime

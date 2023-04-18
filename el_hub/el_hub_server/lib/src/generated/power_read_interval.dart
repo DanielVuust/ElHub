@@ -12,8 +12,10 @@ class PowerReadInterval extends _i1.TableRow {
   PowerReadInterval({
     int? id,
     required this.powerInstallationId,
-    required this.intervalInSeconds,
+    required this.lengthInSeconds,
     required this.powerInKilowatts,
+    required this.powerReadIntervalStart,
+    required this.powerReadIntervalEnd,
   }) : super(id);
 
   factory PowerReadInterval.fromJson(
@@ -24,10 +26,14 @@ class PowerReadInterval extends _i1.TableRow {
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
       powerInstallationId: serializationManager
           .deserialize<int>(jsonSerialization['powerInstallationId']),
-      intervalInSeconds: serializationManager
-          .deserialize<int>(jsonSerialization['intervalInSeconds']),
+      lengthInSeconds: serializationManager
+          .deserialize<int>(jsonSerialization['lengthInSeconds']),
       powerInKilowatts: serializationManager
           .deserialize<int>(jsonSerialization['powerInKilowatts']),
+      powerReadIntervalStart: serializationManager
+          .deserialize<DateTime>(jsonSerialization['powerReadIntervalStart']),
+      powerReadIntervalEnd: serializationManager
+          .deserialize<DateTime>(jsonSerialization['powerReadIntervalEnd']),
     );
   }
 
@@ -35,9 +41,13 @@ class PowerReadInterval extends _i1.TableRow {
 
   int powerInstallationId;
 
-  int intervalInSeconds;
+  int lengthInSeconds;
 
   int powerInKilowatts;
+
+  DateTime powerReadIntervalStart;
+
+  DateTime powerReadIntervalEnd;
 
   @override
   String get tableName => 'power_read_interval';
@@ -46,8 +56,10 @@ class PowerReadInterval extends _i1.TableRow {
     return {
       'id': id,
       'powerInstallationId': powerInstallationId,
-      'intervalInSeconds': intervalInSeconds,
+      'lengthInSeconds': lengthInSeconds,
       'powerInKilowatts': powerInKilowatts,
+      'powerReadIntervalStart': powerReadIntervalStart,
+      'powerReadIntervalEnd': powerReadIntervalEnd,
     };
   }
 
@@ -56,8 +68,10 @@ class PowerReadInterval extends _i1.TableRow {
     return {
       'id': id,
       'powerInstallationId': powerInstallationId,
-      'intervalInSeconds': intervalInSeconds,
+      'lengthInSeconds': lengthInSeconds,
       'powerInKilowatts': powerInKilowatts,
+      'powerReadIntervalStart': powerReadIntervalStart,
+      'powerReadIntervalEnd': powerReadIntervalEnd,
     };
   }
 
@@ -66,8 +80,10 @@ class PowerReadInterval extends _i1.TableRow {
     return {
       'id': id,
       'powerInstallationId': powerInstallationId,
-      'intervalInSeconds': intervalInSeconds,
+      'lengthInSeconds': lengthInSeconds,
       'powerInKilowatts': powerInKilowatts,
+      'powerReadIntervalStart': powerReadIntervalStart,
+      'powerReadIntervalEnd': powerReadIntervalEnd,
     };
   }
 
@@ -83,11 +99,17 @@ class PowerReadInterval extends _i1.TableRow {
       case 'powerInstallationId':
         powerInstallationId = value;
         return;
-      case 'intervalInSeconds':
-        intervalInSeconds = value;
+      case 'lengthInSeconds':
+        lengthInSeconds = value;
         return;
       case 'powerInKilowatts':
         powerInKilowatts = value;
+        return;
+      case 'powerReadIntervalStart':
+        powerReadIntervalStart = value;
+        return;
+      case 'powerReadIntervalEnd':
+        powerReadIntervalEnd = value;
         return;
       default:
         throw UnimplementedError();
@@ -216,16 +238,22 @@ class PowerReadIntervalTable extends _i1.Table {
 
   final powerInstallationId = _i1.ColumnInt('powerInstallationId');
 
-  final intervalInSeconds = _i1.ColumnInt('intervalInSeconds');
+  final lengthInSeconds = _i1.ColumnInt('lengthInSeconds');
 
   final powerInKilowatts = _i1.ColumnInt('powerInKilowatts');
+
+  final powerReadIntervalStart = _i1.ColumnDateTime('powerReadIntervalStart');
+
+  final powerReadIntervalEnd = _i1.ColumnDateTime('powerReadIntervalEnd');
 
   @override
   List<_i1.Column> get columns => [
         id,
         powerInstallationId,
-        intervalInSeconds,
+        lengthInSeconds,
         powerInKilowatts,
+        powerReadIntervalStart,
+        powerReadIntervalEnd,
       ];
 }
 

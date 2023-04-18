@@ -1,4 +1,6 @@
+import 'package:el_hub_server/src/endpoints/power_read_interval.dart';
 import 'package:serverpod/serverpod.dart';
+import 'package:serverpod_auth_server/module.dart';
 
 import '../../utility/logging/logger.dart';
 import '../generated/power_installation.dart';
@@ -8,26 +10,64 @@ class PowerInstallationEndpoint extends Endpoint {
   @override
   bool get requireLogin => true;
 
-  Future<List<PowerInstallation>> getUsersPowerInstallations(
-      Session session) async {
+  Future<List<PowerInstallation>> getUsersPowerInstallations(Session session,
+      {DateTime? getIntervalUntilDateTime}) async {
     //Serverpod doesn't support linq like queries yet, so we have to retrieve all the power installations and filter them in the code.
     //TODO, Fix when serverpod supports linq like queries.
-    var powerInstallations = await PowerInstallation.find(session);
 
-    var usersPowerInstallations = powerInstallations
-        .where((h) => h.owners
-            .any((element) => element.id == session.auth.authenticatedUserId))
+    var powerInstallations =
+        await PowerInstallation.find(session, useCache: false);
+
+    List<PowerInstallation> usersPowerInstallations = powerInstallations
+        // .where((h) =>
+        //     h.owners != null &&
+        //     h.owners!.any(
+        //         (element) => element.id == session.auth.authenticatedUserId))
         .toList();
-    var log = logger(PowerInstallationEndpoint);
-    log.d(usersPowerInstallations.toString());
+    for (var element in usersPowerInstallations) {
+      element.powerReadIntervals = await PowerReadIntervalEndpoint()
+          .getPowerReadIntervals(session, element.id!,
+              getIntervalUntilDateTime: getIntervalUntilDateTime);
+    }
     return usersPowerInstallations;
   }
 
-  Future<String> hello(Session session, String name) async {
-    print(await session.auth.authenticatedUserId);
-    session.serverpod.futureCallWithDelay(
-        "ExampleFutureCall", null, Duration(minutes: 3, seconds: 2));
+  Future<void> addUserToPowerInstallation(
+      Session session, int powerInstallationId) async {
+    var powerInstallation = await PowerInstallation.findSingleRow(session,
+        where: (t) => PowerInstallation.t.id.equals(powerInstallationId));
+    if (powerInstallation == null) {
+      throw Exception('Power installation not found');
+    }
+    int? userId = await session.auth.authenticatedUserId;
+    if (userId == null) {
+      throw Exception('User not found');
+    }
+    var userInfo = await Users.findUserByUserId(session, userId);
+    if (userInfo == null) {
+      throw Exception('User not found');
+    }
+    // powerInstallation.owners.add(userInfo);
+    await PowerInstallation.update(session, powerInstallation);
+  }
 
-    return 'Hello $name';
+  Future<void> createUsersPowerInstallation(Session session) async {
+    int? userId = await session.auth.authenticatedUserId;
+    if (userId == null) {
+      throw Exception('User not found');
+    }
+    var userInfo = await Users.findUserByUserId(session, userId);
+    if (userInfo == null) {
+      throw Exception('User not found');
+    }
+
+    await PowerInstallation.insert(
+        session,
+        PowerInstallation(
+          type: "testType",
+          name: 'My Power Installation',
+          owners: [userInfo],
+        ));
+    return;
   }
 }

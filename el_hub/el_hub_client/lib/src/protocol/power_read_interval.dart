@@ -12,8 +12,10 @@ class PowerReadInterval extends _i1.SerializableEntity {
   PowerReadInterval({
     this.id,
     required this.powerInstallationId,
-    required this.intervalInSeconds,
+    required this.lengthInSeconds,
     required this.powerInKilowatts,
+    required this.powerReadIntervalStart,
+    required this.powerReadIntervalEnd,
   });
 
   factory PowerReadInterval.fromJson(
@@ -24,10 +26,14 @@ class PowerReadInterval extends _i1.SerializableEntity {
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
       powerInstallationId: serializationManager
           .deserialize<int>(jsonSerialization['powerInstallationId']),
-      intervalInSeconds: serializationManager
-          .deserialize<int>(jsonSerialization['intervalInSeconds']),
+      lengthInSeconds: serializationManager
+          .deserialize<int>(jsonSerialization['lengthInSeconds']),
       powerInKilowatts: serializationManager
           .deserialize<int>(jsonSerialization['powerInKilowatts']),
+      powerReadIntervalStart: serializationManager
+          .deserialize<DateTime>(jsonSerialization['powerReadIntervalStart']),
+      powerReadIntervalEnd: serializationManager
+          .deserialize<DateTime>(jsonSerialization['powerReadIntervalEnd']),
     );
   }
 
@@ -38,17 +44,23 @@ class PowerReadInterval extends _i1.SerializableEntity {
 
   int powerInstallationId;
 
-  int intervalInSeconds;
+  int lengthInSeconds;
 
   int powerInKilowatts;
+
+  DateTime powerReadIntervalStart;
+
+  DateTime powerReadIntervalEnd;
 
   @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'powerInstallationId': powerInstallationId,
-      'intervalInSeconds': intervalInSeconds,
+      'lengthInSeconds': lengthInSeconds,
       'powerInKilowatts': powerInKilowatts,
+      'powerReadIntervalStart': powerReadIntervalStart,
+      'powerReadIntervalEnd': powerReadIntervalEnd,
     };
   }
 }

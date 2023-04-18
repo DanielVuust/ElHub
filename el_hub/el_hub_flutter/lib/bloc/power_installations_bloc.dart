@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:developer';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:el_hub_client/el_hub_client.dart';
@@ -11,7 +13,7 @@ part 'power_installations_event.dart';
 part 'power_installations_state.dart';
 
 class PowerInstallationsBloc extends Bloc<PowerInstallationsEvent, PowerInstallationsState> {
-  final _powerInstallationsStateController = StreamController<PowerInstallationsState>();
+  final _powerInstallationsStateController = StreamController<PowerInstallationsState>.broadcast();
 
   StreamSink<PowerInstallationsState> get _currentUserPowerInstallationsState =>
       _powerInstallationsStateController.sink;

@@ -1,4 +1,0 @@
-class: ServerpodEmailAuth
-table: serverpod_email_auth
-fields: 
-  test: String
