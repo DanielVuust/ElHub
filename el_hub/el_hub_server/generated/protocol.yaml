@@ -1,2 +1,6 @@
 example:
   - hello:
+loginStatus:
+powerInstallation:
+  - getUsersPowerInstallations:
+  - hello:

@@ -20,7 +20,6 @@ class SignInScreen extends StatelessWidget {
               children: [
                 SignInWithEmailButton(
                   caller: client.modules.auth,
-                  onSignedIn: () => Navigator.popAndPushNamed(context, "/home"),
                 ),
               ],
             ),

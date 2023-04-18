@@ -9,9 +9,19 @@ library protocol; // ignore_for_file: no_leading_underscores_for_library_prefixe
 
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'example.dart' as _i2;
-import 'package:serverpod_auth_server/module.dart' as _i3;
-import 'package:serverpod/protocol.dart' as _i4;
-export 'example.dart'; // ignore_for_file: equal_keys_in_map
+import 'power_installation.dart' as _i3;
+import 'power_read_interval.dart' as _i4;
+import 'test.dart' as _i5;
+import 'user.dart' as _i6;
+import 'protocol.dart' as _i7;
+import 'package:el_hub_server/src/generated/power_installation.dart' as _i8;
+import 'package:serverpod_auth_server/module.dart' as _i9;
+import 'package:serverpod/protocol.dart' as _i10;
+export 'example.dart';
+export 'power_installation.dart';
+export 'power_read_interval.dart';
+export 'test.dart';
+export 'user.dart'; // ignore_for_file: equal_keys_in_map
 
 class Protocol extends _i1.SerializationManagerServer {
   Protocol._();
@@ -34,14 +44,50 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i2.Example) {
       return _i2.Example.fromJson(data, this) as T;
     }
+    if (t == _i3.PowerInstallation) {
+      return _i3.PowerInstallation.fromJson(data, this) as T;
+    }
+    if (t == _i4.PowerReadInterval) {
+      return _i4.PowerReadInterval.fromJson(data, this) as T;
+    }
+    if (t == _i5.ServerpodEmailAuth) {
+      return _i5.ServerpodEmailAuth.fromJson(data, this) as T;
+    }
+    if (t == _i6.User) {
+      return _i6.User.fromJson(data, this) as T;
+    }
     if (t == _i1.getType<_i2.Example?>()) {
       return (data != null ? _i2.Example.fromJson(data, this) : null) as T;
     }
+    if (t == _i1.getType<_i3.PowerInstallation?>()) {
+      return (data != null ? _i3.PowerInstallation.fromJson(data, this) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i4.PowerReadInterval?>()) {
+      return (data != null ? _i4.PowerReadInterval.fromJson(data, this) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i5.ServerpodEmailAuth?>()) {
+      return (data != null ? _i5.ServerpodEmailAuth.fromJson(data, this) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i6.User?>()) {
+      return (data != null ? _i6.User.fromJson(data, this) : null) as T;
+    }
+    if (t == List<_i7.User>) {
+      return (data as List).map((e) => deserialize<_i7.User>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i8.PowerInstallation>) {
+      return (data as List)
+          .map((e) => deserialize<_i8.PowerInstallation>(e))
+          .toList() as dynamic;
+    }
     try {
-      return _i3.Protocol().deserialize<T>(data, t);
+      return _i9.Protocol().deserialize<T>(data, t);
     } catch (_) {}
     try {
-      return _i4.Protocol().deserialize<T>(data, t);
+      return _i10.Protocol().deserialize<T>(data, t);
     } catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -49,12 +95,24 @@ class Protocol extends _i1.SerializationManagerServer {
   @override
   String? getClassNameForObject(Object data) {
     String? className;
-    className = _i3.Protocol().getClassNameForObject(data);
+    className = _i9.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
     if (data is _i2.Example) {
       return 'Example';
+    }
+    if (data is _i3.PowerInstallation) {
+      return 'PowerInstallation';
+    }
+    if (data is _i4.PowerReadInterval) {
+      return 'PowerReadInterval';
+    }
+    if (data is _i5.ServerpodEmailAuth) {
+      return 'ServerpodEmailAuth';
+    }
+    if (data is _i6.User) {
+      return 'User';
     }
     return super.getClassNameForObject(data);
   }
@@ -63,10 +121,22 @@ class Protocol extends _i1.SerializationManagerServer {
   dynamic deserializeByClassName(Map<String, dynamic> data) {
     if (data['className'].startsWith('serverpod_auth.')) {
       data['className'] = data['className'].substring(15);
-      return _i3.Protocol().deserializeByClassName(data);
+      return _i9.Protocol().deserializeByClassName(data);
     }
     if (data['className'] == 'Example') {
       return deserialize<_i2.Example>(data['data']);
+    }
+    if (data['className'] == 'PowerInstallation') {
+      return deserialize<_i3.PowerInstallation>(data['data']);
+    }
+    if (data['className'] == 'PowerReadInterval') {
+      return deserialize<_i4.PowerReadInterval>(data['data']);
+    }
+    if (data['className'] == 'ServerpodEmailAuth') {
+      return deserialize<_i5.ServerpodEmailAuth>(data['data']);
+    }
+    if (data['className'] == 'User') {
+      return deserialize<_i6.User>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
@@ -74,16 +144,26 @@ class Protocol extends _i1.SerializationManagerServer {
   @override
   _i1.Table? getTableForType(Type t) {
     {
-      var table = _i3.Protocol().getTableForType(t);
+      var table = _i9.Protocol().getTableForType(t);
       if (table != null) {
         return table;
       }
     }
     {
-      var table = _i4.Protocol().getTableForType(t);
+      var table = _i10.Protocol().getTableForType(t);
       if (table != null) {
         return table;
       }
+    }
+    switch (t) {
+      case _i3.PowerInstallation:
+        return _i3.PowerInstallation.t;
+      case _i4.PowerReadInterval:
+        return _i4.PowerReadInterval.t;
+      case _i5.ServerpodEmailAuth:
+        return _i5.ServerpodEmailAuth.t;
+      case _i6.User:
+        return _i6.User.t;
     }
     return null;
   }

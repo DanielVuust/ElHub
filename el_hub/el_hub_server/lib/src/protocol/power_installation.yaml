@@ -1,0 +1,7 @@
+class: PowerInstallation
+table: power_installation
+fields: 
+  name: String
+  #Note: Type should be en enum or refer to a separate table, but currently i'll just be a nullable string.
+  type: String?
+  owners: List<User>

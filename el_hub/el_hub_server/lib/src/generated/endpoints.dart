@@ -8,7 +8,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/example_endpoint.dart' as _i2;
-import 'package:serverpod_auth_server/module.dart' as _i3;
+import '../endpoints/login_status_endpoint.dart' as _i3;
+import '../endpoints/power_installation.dart' as _i4;
+import 'package:serverpod_auth_server/module.dart' as _i5;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -19,7 +21,19 @@ class Endpoints extends _i1.EndpointDispatch {
           server,
           'example',
           null,
-        )
+        ),
+      'loginStatus': _i3.LoginStatusEndpoint()
+        ..initialize(
+          server,
+          'loginStatus',
+          null,
+        ),
+      'powerInstallation': _i4.PowerInstallationEndpoint()
+        ..initialize(
+          server,
+          'powerInstallation',
+          null,
+        ),
     };
     connectors['example'] = _i1.EndpointConnector(
       name: 'example',
@@ -45,6 +59,46 @@ class Endpoints extends _i1.EndpointDispatch {
         )
       },
     );
-    modules['serverpod_auth'] = _i3.Endpoints()..initializeEndpoints(server);
+    connectors['loginStatus'] = _i1.EndpointConnector(
+      name: 'loginStatus',
+      endpoint: endpoints['loginStatus']!,
+      methodConnectors: {},
+    );
+    connectors['powerInstallation'] = _i1.EndpointConnector(
+      name: 'powerInstallation',
+      endpoint: endpoints['powerInstallation']!,
+      methodConnectors: {
+        'getUsersPowerInstallations': _i1.MethodConnector(
+          name: 'getUsersPowerInstallations',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['powerInstallation'] as _i4.PowerInstallationEndpoint)
+                  .getUsersPowerInstallations(session),
+        ),
+        'hello': _i1.MethodConnector(
+          name: 'hello',
+          params: {
+            'name': _i1.ParameterDescription(
+              name: 'name',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['powerInstallation'] as _i4.PowerInstallationEndpoint)
+                  .hello(
+            session,
+            params['name'],
+          ),
+        ),
+      },
+    );
+    modules['serverpod_auth'] = _i5.Endpoints()..initializeEndpoints(server);
   }
 }
