@@ -73,6 +73,30 @@ class Protocol extends _i1.SerializationManagerServer {
           .map((e) => deserialize<_i6.PowerReadInterval>(e))
           .toList() as dynamic;
     }
+    if (t == _i1.getType<_i3.PowerInstallation?>()) {
+      return (data != null ? _i3.PowerInstallation.fromJson(data, this) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i4.PowerReadInterval?>()) {
+      return (data != null ? _i4.PowerReadInterval.fromJson(data, this) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i5.ServerpodEmailAuth?>()) {
+      return (data != null ? _i5.ServerpodEmailAuth.fromJson(data, this) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i6.User?>()) {
+      return (data != null ? _i6.User.fromJson(data, this) : null) as T;
+    }
+    if (t == List<_i7.User>) {
+      return (data as List).map((e) => deserialize<_i7.User>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i8.PowerInstallation>) {
+      return (data as List)
+          .map((e) => deserialize<_i8.PowerInstallation>(e))
+          .toList() as dynamic;
+    }
     try {
       return _i7.Protocol().deserialize<T>(data, t);
     } catch (_) {}
@@ -95,6 +119,18 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i3.PowerReadInterval) {
       return 'PowerReadInterval';
     }
+    if (data is _i3.PowerInstallation) {
+      return 'PowerInstallation';
+    }
+    if (data is _i4.PowerReadInterval) {
+      return 'PowerReadInterval';
+    }
+    if (data is _i5.ServerpodEmailAuth) {
+      return 'ServerpodEmailAuth';
+    }
+    if (data is _i6.User) {
+      return 'User';
+    }
     return super.getClassNameForObject(data);
   }
 
@@ -109,6 +145,18 @@ class Protocol extends _i1.SerializationManagerServer {
     }
     if (data['className'] == 'PowerReadInterval') {
       return deserialize<_i3.PowerReadInterval>(data['data']);
+    }
+    if (data['className'] == 'PowerInstallation') {
+      return deserialize<_i3.PowerInstallation>(data['data']);
+    }
+    if (data['className'] == 'PowerReadInterval') {
+      return deserialize<_i4.PowerReadInterval>(data['data']);
+    }
+    if (data['className'] == 'ServerpodEmailAuth') {
+      return deserialize<_i5.ServerpodEmailAuth>(data['data']);
+    }
+    if (data['className'] == 'User') {
+      return deserialize<_i6.User>(data['data']);
     }
     return super.deserializeByClassName(data);
   }

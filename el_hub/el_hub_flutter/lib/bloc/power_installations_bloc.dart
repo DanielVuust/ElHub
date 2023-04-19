@@ -12,8 +12,10 @@ import '../utility/logging/logger.dart';
 part 'power_installations_event.dart';
 part 'power_installations_state.dart';
 
-class PowerInstallationsBloc extends Bloc<PowerInstallationsEvent, PowerInstallationsState> {
-  final _powerInstallationsStateController = StreamController<PowerInstallationsState>.broadcast();
+class PowerInstallationsBloc
+    extends Bloc<PowerInstallationsEvent, PowerInstallationsState> {
+  final _powerInstallationsStateController =
+      StreamController<PowerInstallationsState>.broadcast();
 
   StreamSink<PowerInstallationsState> get _currentUserPowerInstallationsState =>
       _powerInstallationsStateController.sink;
@@ -24,9 +26,11 @@ class PowerInstallationsBloc extends Bloc<PowerInstallationsEvent, PowerInstalla
 
   final _eventStreamController = StreamController<PowerInstallationsEvent>();
 
-  StreamSink<PowerInstallationsEvent> get eventSink => _eventStreamController.sink;
+  StreamSink<PowerInstallationsEvent> get eventSink =>
+      _eventStreamController.sink;
 
-  Stream<PowerInstallationsEvent?> get eventStream => _eventStreamController.stream;
+  Stream<PowerInstallationsEvent?> get eventStream =>
+      _eventStreamController.stream;
 
   PowerInstallationsBloc() : super(PowerInstallationsInitial()) {
     _eventStreamController.stream.listen(_mapEventToState);

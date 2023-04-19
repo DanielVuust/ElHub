@@ -1,0 +1,4 @@
+class: User
+table: user
+fields: 
+  authUserId: int, parent=serverpod_email_auth

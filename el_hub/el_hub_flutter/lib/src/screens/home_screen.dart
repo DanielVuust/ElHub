@@ -36,18 +36,20 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     BlocProvider.of<PowerInstallationsBloc>(context)
         .eventSink
         .add(PowerInstallationsEventLoad());
 
-    updatePowerReadsEventTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+    updatePowerReadsEventTimer =
+        Timer.periodic(const Duration(seconds: 5), (timer) {
       BlocProvider.of<PowerInstallationsBloc>(context)
           .eventSink
           .add(UpdatePowerReadsEvent());
     });
   }
-  @override 
+
+  @override
   void dispose() {
     updatePowerReadsEventTimer.cancel();
     super.dispose();
