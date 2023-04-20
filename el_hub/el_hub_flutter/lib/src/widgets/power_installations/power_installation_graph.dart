@@ -16,13 +16,15 @@ class PowerInstallationGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
+        enableAxisAnimation: true,
         // Initialize category axis
         primaryXAxis: CategoryAxis(),
         series: <ChartSeries>[
           // Initialize line series
           LineSeries<DomainChartData, String>(
               dataSource: chartData,
-              xValueMapper: (DomainChartData data, _) => DateFormat.Hms().format(data.x),
+              xValueMapper: (DomainChartData data, _) =>
+                  DateFormat.Hms().format(data.x),
               yValueMapper: (DomainChartData data, _) => data.y)
         ]);
   }

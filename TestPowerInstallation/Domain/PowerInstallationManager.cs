@@ -26,7 +26,7 @@ namespace TestPowerInstallation.Domain
             while (_powerCreationStopRequested == false)
             {
                 Console.WriteLine("Creating power data");
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
                 addPowerInterval.AddPowerIntervalToPowerInstallation(startDateTime, DateTime.Now);
                 startDateTime = DateTime.Now;
             }

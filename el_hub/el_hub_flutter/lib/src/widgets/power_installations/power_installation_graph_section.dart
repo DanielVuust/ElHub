@@ -1,5 +1,6 @@
 import 'package:el_hub_client/el_hub_client.dart';
 import 'package:el_hub_flutter/src/widgets/power_installations/power_installation_graph.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
@@ -20,7 +21,13 @@ class PowerInstallationGraphSection extends StatelessWidget {
             _convertKwToKwh(e.powerReadIntervalStart, e.powerReadIntervalEnd,
                 e.powerInKilowatts.toDouble())))
         .toList();
-    return PowerInstallationGraph(chartData: chartData3);
+
+    return Column(children: [
+      Text(
+        powerInstallation.name,
+      ),
+      PowerInstallationGraph(chartData: chartData3),
+    ]);
   }
 
   double _convertKwToKwh(DateTime start, DateTime end, double kw) {

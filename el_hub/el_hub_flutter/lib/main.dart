@@ -18,7 +18,7 @@ import 'bloc/power_installations_bloc.dart';
 // the default port. You will need to modify this to connect to staging or
 // production servers.
 var client = Client(
-  'http://10.0.2.2:8079/',
+  'http://localhost:8079/',
   authenticationKeyManager: FlutterAuthenticationKeyManager(),
 )..connectivityMonitor = FlutterConnectivityMonitor();
 var sessionManager = SessionManager(
@@ -60,8 +60,7 @@ class _MyWidgetState extends State<MyWidget> {
             }
             return const SignInScreen();
           },
-        )
-      );
+        ));
   }
 
   void initState() {

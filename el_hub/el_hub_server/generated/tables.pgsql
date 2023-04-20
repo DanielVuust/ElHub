@@ -35,3 +35,34 @@ ALTER TABLE ONLY "power_read_interval"
       REFERENCES power_installation(id)
         ON DELETE CASCADE;
 
+--
+-- Class ServerpodEmailAuth as table serverpod_email_auth
+--
+
+CREATE TABLE "serverpod_email_auth" (
+  "id" serial,
+  "test" text NOT NULL
+);
+
+ALTER TABLE ONLY "serverpod_email_auth"
+  ADD CONSTRAINT serverpod_email_auth_pkey PRIMARY KEY (id);
+
+
+--
+-- Class User as table user
+--
+
+CREATE TABLE "user" (
+  "id" serial,
+  "authUserId" integer NOT NULL
+);
+
+ALTER TABLE ONLY "user"
+  ADD CONSTRAINT user_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY "user"
+  ADD CONSTRAINT user_fk_0
+    FOREIGN KEY("authUserId")
+      REFERENCES serverpod_email_auth(id)
+        ON DELETE CASCADE;
+

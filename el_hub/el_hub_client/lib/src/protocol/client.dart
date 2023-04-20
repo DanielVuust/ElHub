@@ -70,33 +70,6 @@ class _EndpointPowerReadInterval extends _i1.EndpointRef {
       );
 }
 
-class _EndpointLoginStatus extends _i1.EndpointRef {
-  _EndpointLoginStatus(_i1.EndpointCaller caller) : super(caller);
-
-  @override
-  String get name => 'loginStatus';
-}
-
-class _EndpointPowerInstallation extends _i1.EndpointRef {
-  _EndpointPowerInstallation(_i1.EndpointCaller caller) : super(caller);
-
-  @override
-  String get name => 'powerInstallation';
-
-  _i2.Future<List<_i3.PowerInstallation>> getUsersPowerInstallations() =>
-      caller.callServerEndpoint<List<_i3.PowerInstallation>>(
-        'powerInstallation',
-        'getUsersPowerInstallations',
-        {},
-      );
-
-  _i2.Future<String> hello(String name) => caller.callServerEndpoint<String>(
-        'powerInstallation',
-        'hello',
-        {'name': name},
-      );
-}
-
 class _Modules {
   _Modules(Client client) {
     auth = _i5.Caller(client);
@@ -127,10 +100,6 @@ class Client extends _i1.ServerpodClient {
   late final _EndpointPowerInstallation powerInstallation;
 
   late final _EndpointPowerReadInterval powerReadInterval;
-
-  late final _EndpointLoginStatus loginStatus;
-
-  late final _EndpointPowerInstallation powerInstallation;
 
   late final _Modules modules;
 
