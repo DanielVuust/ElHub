@@ -10,10 +10,10 @@ namespace TestPowerInstallation.Domain
 {
     internal class PowerInstallationManager
     {
-        private readonly PowerInstallation _powerInstallation;
+        private readonly List<PowerInstallation> _powerInstallation;
         private readonly ElHubContext _context;
         private bool _powerCreationStopRequested = false;
-        public PowerInstallationManager(ElHubContext context, PowerInstallation powerInstallation)
+        public PowerInstallationManager(ElHubContext context, List<PowerInstallation> powerInstallation)
         {
             _context = context;
             _powerInstallation = powerInstallation;
