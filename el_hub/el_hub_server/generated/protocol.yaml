@@ -1,6 +1,7 @@
-example:
-  - hello:
 loginStatus:
 powerInstallation:
   - getUsersPowerInstallations:
-  - hello:
+  - addUserToPowerInstallation:
+  - createUsersPowerInstallation:
+powerReadInterval:
+  - getPowerReadIntervals:

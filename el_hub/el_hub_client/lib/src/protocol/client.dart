@@ -9,22 +9,10 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:el_hub_client/src/protocol/power_installation.dart' as _i3;
-import 'package:serverpod_auth_client/module.dart' as _i4;
-import 'dart:io' as _i5;
-import 'protocol.dart' as _i6;
-
-class _EndpointExample extends _i1.EndpointRef {
-  _EndpointExample(_i1.EndpointCaller caller) : super(caller);
-
-  @override
-  String get name => 'example';
-
-  _i2.Future<String> hello(String name) => caller.callServerEndpoint<String>(
-        'example',
-        'hello',
-        {'name': name},
-      );
-}
+import 'package:el_hub_client/src/protocol/power_read_interval.dart' as _i4;
+import 'package:serverpod_auth_client/module.dart' as _i5;
+import 'dart:io' as _i6;
+import 'protocol.dart' as _i7;
 
 class _EndpointLoginStatus extends _i1.EndpointRef {
   _EndpointLoginStatus(_i1.EndpointCaller caller) : super(caller);
@@ -39,58 +27,87 @@ class _EndpointPowerInstallation extends _i1.EndpointRef {
   @override
   String get name => 'powerInstallation';
 
-  _i2.Future<List<_i3.PowerInstallation>> getUsersPowerInstallations() =>
+  _i2.Future<List<_i3.PowerInstallation>> getUsersPowerInstallations(
+          {DateTime? getIntervalUntilDateTime}) =>
       caller.callServerEndpoint<List<_i3.PowerInstallation>>(
         'powerInstallation',
         'getUsersPowerInstallations',
-        {},
+        {'getIntervalUntilDateTime': getIntervalUntilDateTime},
       );
 
-  _i2.Future<String> hello(String name) => caller.callServerEndpoint<String>(
+  _i2.Future<void> addUserToPowerInstallation(int powerInstallationId) =>
+      caller.callServerEndpoint<void>(
         'powerInstallation',
-        'hello',
-        {'name': name},
+        'addUserToPowerInstallation',
+        {'powerInstallationId': powerInstallationId},
+      );
+
+  _i2.Future<void> createUsersPowerInstallation() =>
+      caller.callServerEndpoint<void>(
+        'powerInstallation',
+        'createUsersPowerInstallation',
+        {},
+      );
+}
+
+class _EndpointPowerReadInterval extends _i1.EndpointRef {
+  _EndpointPowerReadInterval(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'powerReadInterval';
+
+  _i2.Future<List<_i4.PowerReadInterval>> getPowerReadIntervals(
+    int powerInstallationId, {
+    DateTime? getIntervalUntilDateTime,
+  }) =>
+      caller.callServerEndpoint<List<_i4.PowerReadInterval>>(
+        'powerReadInterval',
+        'getPowerReadIntervals',
+        {
+          'powerInstallationId': powerInstallationId,
+          'getIntervalUntilDateTime': getIntervalUntilDateTime,
+        },
       );
 }
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i4.Caller(client);
+    auth = _i5.Caller(client);
   }
 
-  late final _i4.Caller auth;
+  late final _i5.Caller auth;
 }
 
 class Client extends _i1.ServerpodClient {
   Client(
     String host, {
-    _i5.SecurityContext? context,
+    _i6.SecurityContext? context,
     _i1.AuthenticationKeyManager? authenticationKeyManager,
   }) : super(
           host,
-          _i6.Protocol(),
+          _i7.Protocol(),
           context: context,
           authenticationKeyManager: authenticationKeyManager,
         ) {
-    example = _EndpointExample(this);
     loginStatus = _EndpointLoginStatus(this);
     powerInstallation = _EndpointPowerInstallation(this);
+    powerReadInterval = _EndpointPowerReadInterval(this);
     modules = _Modules(this);
   }
-
-  late final _EndpointExample example;
 
   late final _EndpointLoginStatus loginStatus;
 
   late final _EndpointPowerInstallation powerInstallation;
 
+  late final _EndpointPowerReadInterval powerReadInterval;
+
   late final _Modules modules;
 
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
-        'example': example,
         'loginStatus': loginStatus,
         'powerInstallation': powerInstallation,
+        'powerReadInterval': powerReadInterval,
       };
   @override
   Map<String, _i1.ModuleEndpointCaller> get moduleLookup =>

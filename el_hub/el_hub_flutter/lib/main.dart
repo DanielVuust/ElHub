@@ -60,8 +60,7 @@ class _MyWidgetState extends State<MyWidget> {
             }
             return const SignInScreen();
           },
-        )
-      );
+        ));
   }
 
   void initState() {

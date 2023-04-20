@@ -9,17 +9,7 @@ namespace TestPowerInstallation
         {
             ElHubContext context = new();
             Console.WriteLine("Starting");
-            PowerInstallation powerInstallation = context.PowerInstallations.FirstOrDefault();
-            if (powerInstallation == null)
-            {
-                context.PowerInstallations.Add(new PowerInstallation()
-                    {
-                        Name = "test",
-                        Type = "testType",
-                        PowerReadIntervals = new List<PowerReadInterval>(),
-                    }
-                );
-            }
+            List<PowerInstallation> powerInstallation = context.PowerInstallations.Where(x => x.Owners != null).ToList();
 
             context.SaveChanges();
             PowerInstallationManager powerInstallationManager = new(context, powerInstallation);

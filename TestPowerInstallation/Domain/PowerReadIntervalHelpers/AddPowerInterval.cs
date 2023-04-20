@@ -9,25 +9,29 @@ namespace TestPowerInstallation.Domain.PowerReadIntervalHelpers
 {
     internal class AddPowerInterval
     {
-        private readonly PowerInstallation _powerInstallation;
+        private readonly List<PowerInstallation> _powerInstallations;
         private readonly ElHubContext _context;
 
-        public AddPowerInterval(ElHubContext context, PowerInstallation powerInstallation)
+        public AddPowerInterval(ElHubContext context, List<PowerInstallation> powerInstallations)
         {
             _context = context;
-            _powerInstallation = powerInstallation;
+            _powerInstallations = powerInstallations;
         }
 
         public void AddPowerIntervalToPowerInstallation(DateTime startDateTime, DateTime endDateTime)
         {
             Random rand = new Random();
-            _powerInstallation.PowerReadIntervals.Add(new PowerReadInterval
+            foreach (var powerInstallation in _powerInstallations)
             {
-                PowerInstallationId = _powerInstallation.Id,
-                PowerReadIntervalStart = DateTime.Parse(startDateTime.ToUniversalTime().ToString()),
-                PowerReadIntervalEnd = DateTime.Parse(endDateTime.ToUniversalTime().ToString()),
-                PowerInKilowatts = rand.Next(1000),
-            });
+                powerInstallation.PowerReadIntervals.Add(new PowerReadInterval
+                {
+                    PowerReadIntervalStart = DateTime.Parse(startDateTime.ToUniversalTime().ToString()),
+                    PowerReadIntervalEnd = DateTime.Parse(endDateTime.ToUniversalTime().ToString()),
+                    PowerInKilowatts = rand.Next(1000),
+                });
+
+            }
+            
             _context.SaveChanges();
         }
     }
