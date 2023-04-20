@@ -10,7 +10,6 @@ class PowerReadIntervalEndpoint extends Endpoint {
   Future<List<PowerReadInterval>> getPowerReadIntervals(
       Session session, int powerInstallationId,
       {DateTime? getIntervalUntilDateTime}) async {
-    print("here2");
     Expression ex =
         PowerReadInterval.t.powerInstallationId.equals(powerInstallationId);
     var powerReadIntervals = await PowerReadInterval.find(session,

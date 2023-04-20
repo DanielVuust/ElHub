@@ -17,12 +17,13 @@ class PowerInstallationEndpoint extends Endpoint {
 
     var powerInstallations =
         await PowerInstallation.find(session, useCache: false);
-
+        
+    var userId = await session.auth.authenticatedUserId;
     List<PowerInstallation> usersPowerInstallations = powerInstallations
-        // .where((h) =>
-        //     h.owners != null &&
-        //     h.owners!.any(
-        //         (element) => element.id == session.auth.authenticatedUserId))
+        .where((h) =>
+            h.owners != null &&
+            h.owners!.any((element) =>
+                element.id == userId))
         .toList();
     for (var element in usersPowerInstallations) {
       element.powerReadIntervals = await PowerReadIntervalEndpoint()

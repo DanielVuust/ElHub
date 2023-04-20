@@ -13,31 +13,32 @@ class PowerInstallationGraphStreamBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300,
-      child: StreamBuilder<PowerInstallationsState>(
-        stream: BlocProvider.of<PowerInstallationsBloc>(context)
-            .powerInstallationStateStream,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            return const Text('done');
-          } else if (snapshot.hasError) {
-            return const Text('Error!');
-          } else if (snapshot.data == null) {
-            return const Text('No Data');
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data?.powerInstallations.length ?? 0,
-              itemBuilder: (context, index) {
-                return PowerInstallationGraphSection(
-                  powerInstallation: snapshot.data!.powerInstallations[index],
-                );
-              },
-            );
-          }
-        },
+    return Expanded(
+      child: SizedBox(
+        child: StreamBuilder<PowerInstallationsState>(
+          stream: BlocProvider.of<PowerInstallationsBloc>(context)
+              .powerInstallationStateStream,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              return const Text('done');
+            } else if (snapshot.hasError) {
+              return const Text('Error!');
+            } else if (snapshot.data == null) {
+              return const Text('No Data');
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data?.powerInstallations.length ?? 0,
+                itemBuilder: (context, index) {
+                  return PowerInstallationGraphSection(
+                    powerInstallation: snapshot.data!.powerInstallations[index],
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }

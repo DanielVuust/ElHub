@@ -15,7 +15,6 @@ class PowerInstallationsEventLoad extends PowerInstallationsEvent {
         .getUsersPowerInstallations(
             getIntervalUntilDateTime:
                 DateTime.now().subtract(const Duration(minutes: 1)));
-    print(state.powerInstallations);
   }
 }
 
@@ -25,13 +24,11 @@ class UpdatePowerReadsEvent extends PowerInstallationsEvent {
   @override
   execute(PowerInstallationsState state) async {
     _logger.d("calling UpdatePowerReadEvent.execute");
-
     for (var element in state.powerInstallations) {
       element.powerReadIntervals = await client.powerReadInterval
           .getPowerReadIntervals(element.id!,
               getIntervalUntilDateTime:
                   DateTime.now().subtract(const Duration(minutes: 1)));
-      print(state.powerInstallations[0].powerReadIntervals);
     }
   }
 }
