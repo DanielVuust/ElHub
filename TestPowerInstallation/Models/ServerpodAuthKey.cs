@@ -9,9 +9,9 @@ public partial class ServerpodAuthKey
 
     public int UserId { get; set; }
 
-    public string Hash { get; set; }
+    public string Hash { get; set; } = null!;
 
-    public string ScopeNames { get; set; }
+    public string ScopeNames { get; set; } = null!;
 
-    public string Method { get; set; }
+    public string Method { get; set; } = null!;
 }

@@ -11,5 +11,5 @@ public partial class ServerpodUserImage
 
     public int Version { get; set; }
 
-    public string Url { get; set; }
+    public string Url { get; set; } = null!;
 }

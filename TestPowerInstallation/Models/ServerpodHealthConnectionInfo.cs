@@ -7,7 +7,7 @@ public partial class ServerpodHealthConnectionInfo
 {
     public int Id { get; set; }
 
-    public string ServerId { get; set; }
+    public string ServerId { get; set; } = null!;
 
     public DateTime Timestamp { get; set; }
 

@@ -7,9 +7,9 @@ public partial class ServerpodRuntimeSetting
 {
     public int Id { get; set; }
 
-    public string LogSettings { get; set; }
+    public string LogSettings { get; set; } = null!;
 
-    public string LogSettingsOverrides { get; set; }
+    public string LogSettingsOverrides { get; set; } = null!;
 
     public bool LogServiceCalls { get; set; }
 

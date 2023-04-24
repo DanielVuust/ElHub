@@ -11,6 +11,7 @@ dependencies:
   mailer: ^6.0.0
   serverpod: ^1.0.0
   serverpod_auth_server: ^1.0.0
+  uuid: ^3.0.7
 
 dev_dependencies:
   lints: ^2.0.0

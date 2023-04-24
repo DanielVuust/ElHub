@@ -5,6 +5,7 @@ import 'package:serverpod_auth_server/module.dart';
 import '../../utility/logging/logger.dart';
 import '../generated/power_installation.dart';
 import '../generated/protocol.dart';
+import 'package:uuid/uuid.dart';
 
 class PowerInstallationEndpoint extends Endpoint {
   @override
@@ -20,10 +21,8 @@ class PowerInstallationEndpoint extends Endpoint {
         
     var userId = await session.auth.authenticatedUserId;
     List<PowerInstallation> usersPowerInstallations = powerInstallations
-        .where((h) =>
-            h.owners != null &&
-            h.owners!.any((element) =>
-                element.id == userId))
+        .where((h) => h.owners != null &&
+            h.owners!.any((j) => j.id == userId))
         .toList();
     for (var element in usersPowerInstallations) {
       element.powerReadIntervals = await PowerReadIntervalEndpoint()
@@ -61,14 +60,39 @@ class PowerInstallationEndpoint extends Endpoint {
     if (userInfo == null) {
       throw Exception('User not found');
     }
-
+    var uuid = Uuid();
     await PowerInstallation.insert(
         session,
         PowerInstallation(
-          type: "testType",
-          name: 'My Power Installation',
+          type: "",
+          name: '',
           owners: [userInfo],
+          componentId: "",
         ));
     return;
+  }
+  Future<void> updatePowerInstallation(Session session, PowerInstallation powerInstallation) async {
+    if(powerInstallation.id == null){
+      int? userId = await session.auth.authenticatedUserId;
+      if (userId == null) {
+        throw Exception('User not found');
+      }
+      var userInfo = await Users.findUserByUserId(session, userId);
+      if (userInfo == null) {
+        throw Exception('User not found');
+      }
+      await PowerInstallation.insert(
+        session,
+        PowerInstallation(
+          type: powerInstallation.type,
+          name: powerInstallation.name,
+          owners: [userInfo],
+          componentId: powerInstallation.componentId,
+        ));
+    }
+    else{
+      await PowerInstallation.update(session, powerInstallation);
+
+    }
   }
 }

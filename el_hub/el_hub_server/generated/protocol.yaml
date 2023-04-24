@@ -1,7 +1,9 @@
 loginStatus:
+  - getUserInfo:
 powerInstallation:
   - getUsersPowerInstallations:
   - addUserToPowerInstallation:
   - createUsersPowerInstallation:
+  - updatePowerInstallation:
 powerReadInterval:
   - getPowerReadIntervals:

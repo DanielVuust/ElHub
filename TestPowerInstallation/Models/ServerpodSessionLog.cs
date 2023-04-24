@@ -7,15 +7,15 @@ public partial class ServerpodSessionLog
 {
     public int Id { get; set; }
 
-    public string ServerId { get; set; }
+    public string ServerId { get; set; } = null!;
 
     public DateTime Time { get; set; }
 
-    public string Module { get; set; }
+    public string? Module { get; set; }
 
-    public string Endpoint { get; set; }
+    public string? Endpoint { get; set; }
 
-    public string Method { get; set; }
+    public string? Method { get; set; }
 
     public double? Duration { get; set; }
 
@@ -23,9 +23,9 @@ public partial class ServerpodSessionLog
 
     public bool? Slow { get; set; }
 
-    public string Error { get; set; }
+    public string? Error { get; set; }
 
-    public string StackTrace { get; set; }
+    public string? StackTrace { get; set; }
 
     public int? AuthenticatedUserId { get; set; }
 

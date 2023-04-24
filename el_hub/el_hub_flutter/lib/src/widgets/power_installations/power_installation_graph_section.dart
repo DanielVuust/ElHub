@@ -22,12 +22,21 @@ class PowerInstallationGraphSection extends StatelessWidget {
                 e.powerInKilowatts.toDouble())))
         .toList();
 
-    return Column(children: [
-      Text(
-        powerInstallation.name,
-      ),
-      PowerInstallationGraph(chartData: chartData3),
-    ]);
+    return Container(
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color.fromRGBO(236, 236, 236, 1)
+                ),
+      child: Column(
+        children: [
+        Text(
+          powerInstallation.name,
+        ),
+        PowerInstallationGraph(chartData: chartData3),
+      ]),
+    );
   }
 
   double _convertKwToKwh(DateTime start, DateTime end, double kw) {
