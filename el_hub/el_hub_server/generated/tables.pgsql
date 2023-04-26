@@ -6,7 +6,8 @@ CREATE TABLE "power_installation" (
   "id" serial,
   "name" text NOT NULL,
   "type" text,
-  "owners" json
+  "owners" json,
+  "componentId" text NOT NULL
 );
 
 ALTER TABLE ONLY "power_installation"

@@ -61,7 +61,7 @@ public partial class ElHubContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("User ID=postgres;Password=vPV4Xj6q2B3iXMhUzNfFXxUYlR9RMrZK;Host=localhost;Port=8090;Database=el_hub;Pooling=true;Connection Lifetime=0;");
+        => optionsBuilder.UseNpgsql("User ID=postgres;Password=vPV4Xj6q2B3iXMhUzNfFXxUYlR9RMrZK;Host=localhost;Port=8090;Database=el_hub;Pooling=true;Connection Lifetime=0;;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -72,9 +72,8 @@ public partial class ElHubContext : DbContext
             entity.ToTable("power_installation");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasColumnName("name");
+            entity.Property(e => e.ComponentId).HasColumnName("componentId");
+            entity.Property(e => e.Name).HasColumnName("name");
             entity.Property(e => e.Owners)
                 .HasColumnType("json")
                 .HasColumnName("owners");
@@ -112,14 +111,9 @@ public partial class ElHubContext : DbContext
             entity.HasIndex(e => e.UserId, "serverpod_auth_key_userid_idx");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Hash)
-                .IsRequired()
-                .HasColumnName("hash");
-            entity.Property(e => e.Method)
-                .IsRequired()
-                .HasColumnName("method");
+            entity.Property(e => e.Hash).HasColumnName("hash");
+            entity.Property(e => e.Method).HasColumnName("method");
             entity.Property(e => e.ScopeNames)
-                .IsRequired()
                 .HasColumnType("json")
                 .HasColumnName("scopeNames");
             entity.Property(e => e.UserId).HasColumnName("userId");
@@ -139,18 +133,12 @@ public partial class ElHubContext : DbContext
             entity.Property(e => e.AddedTime)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("addedTime");
-            entity.Property(e => e.ByteData)
-                .IsRequired()
-                .HasColumnName("byteData");
+            entity.Property(e => e.ByteData).HasColumnName("byteData");
             entity.Property(e => e.Expiration)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("expiration");
-            entity.Property(e => e.Path)
-                .IsRequired()
-                .HasColumnName("path");
-            entity.Property(e => e.StorageId)
-                .IsRequired()
-                .HasColumnName("storageId");
+            entity.Property(e => e.Path).HasColumnName("path");
+            entity.Property(e => e.StorageId).HasColumnName("storageId");
             entity.Property(e => e.Verified).HasColumnName("verified");
         });
 
@@ -163,18 +151,12 @@ public partial class ElHubContext : DbContext
             entity.HasIndex(e => new { e.StorageId, e.Path }, "serverpod_cloud_storage_direct_upload_storage_path").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.AuthKey)
-                .IsRequired()
-                .HasColumnName("authKey");
+            entity.Property(e => e.AuthKey).HasColumnName("authKey");
             entity.Property(e => e.Expiration)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("expiration");
-            entity.Property(e => e.Path)
-                .IsRequired()
-                .HasColumnName("path");
-            entity.Property(e => e.StorageId)
-                .IsRequired()
-                .HasColumnName("storageId");
+            entity.Property(e => e.Path).HasColumnName("path");
+            entity.Property(e => e.StorageId).HasColumnName("storageId");
         });
 
         modelBuilder.Entity<ServerpodEmailAuth>(entity =>
@@ -186,12 +168,8 @@ public partial class ElHubContext : DbContext
             entity.HasIndex(e => e.Email, "serverpod_email_auth_email").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Email)
-                .IsRequired()
-                .HasColumnName("email");
-            entity.Property(e => e.Hash)
-                .IsRequired()
-                .HasColumnName("hash");
+            entity.Property(e => e.Email).HasColumnName("email");
+            entity.Property(e => e.Hash).HasColumnName("hash");
             entity.Property(e => e.UserId).HasColumnName("userId");
         });
 
@@ -204,18 +182,10 @@ public partial class ElHubContext : DbContext
             entity.HasIndex(e => e.Email, "serverpod_email_auth_create_account_request_idx").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Email)
-                .IsRequired()
-                .HasColumnName("email");
-            entity.Property(e => e.Hash)
-                .IsRequired()
-                .HasColumnName("hash");
-            entity.Property(e => e.UserName)
-                .IsRequired()
-                .HasColumnName("userName");
-            entity.Property(e => e.VerificationCode)
-                .IsRequired()
-                .HasColumnName("verificationCode");
+            entity.Property(e => e.Email).HasColumnName("email");
+            entity.Property(e => e.Hash).HasColumnName("hash");
+            entity.Property(e => e.UserName).HasColumnName("userName");
+            entity.Property(e => e.VerificationCode).HasColumnName("verificationCode");
         });
 
         modelBuilder.Entity<ServerpodEmailFailedSignIn>(entity =>
@@ -229,12 +199,8 @@ public partial class ElHubContext : DbContext
             entity.HasIndex(e => e.Time, "serverpod_email_failed_sign_in_time_idx");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Email)
-                .IsRequired()
-                .HasColumnName("email");
-            entity.Property(e => e.IpAddress)
-                .IsRequired()
-                .HasColumnName("ipAddress");
+            entity.Property(e => e.Email).HasColumnName("email");
+            entity.Property(e => e.IpAddress).HasColumnName("ipAddress");
             entity.Property(e => e.Time)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("time");
@@ -253,9 +219,7 @@ public partial class ElHubContext : DbContext
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("expiration");
             entity.Property(e => e.UserId).HasColumnName("userId");
-            entity.Property(e => e.VerificationCode)
-                .IsRequired()
-                .HasColumnName("verificationCode");
+            entity.Property(e => e.VerificationCode).HasColumnName("verificationCode");
         });
 
         modelBuilder.Entity<ServerpodFutureCall>(entity =>
@@ -272,13 +236,9 @@ public partial class ElHubContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Identifier).HasColumnName("identifier");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasColumnName("name");
+            entity.Property(e => e.Name).HasColumnName("name");
             entity.Property(e => e.SerializedObject).HasColumnName("serializedObject");
-            entity.Property(e => e.ServerId)
-                .IsRequired()
-                .HasColumnName("serverId");
+            entity.Property(e => e.ServerId).HasColumnName("serverId");
             entity.Property(e => e.Time)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("time");
@@ -293,9 +253,7 @@ public partial class ElHubContext : DbContext
             entity.HasIndex(e => e.UserId, "serverpod_google_refresh_token_userid_idx").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.RefreshToken)
-                .IsRequired()
-                .HasColumnName("refreshToken");
+            entity.Property(e => e.RefreshToken).HasColumnName("refreshToken");
             entity.Property(e => e.UserId).HasColumnName("userId");
         });
 
@@ -312,9 +270,7 @@ public partial class ElHubContext : DbContext
             entity.Property(e => e.Closing).HasColumnName("closing");
             entity.Property(e => e.Granularity).HasColumnName("granularity");
             entity.Property(e => e.Idle).HasColumnName("idle");
-            entity.Property(e => e.ServerId)
-                .IsRequired()
-                .HasColumnName("serverId");
+            entity.Property(e => e.ServerId).HasColumnName("serverId");
             entity.Property(e => e.Timestamp)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("timestamp");
@@ -331,12 +287,8 @@ public partial class ElHubContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Granularity).HasColumnName("granularity");
             entity.Property(e => e.IsHealthy).HasColumnName("isHealthy");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasColumnName("name");
-            entity.Property(e => e.ServerId)
-                .IsRequired()
-                .HasColumnName("serverId");
+            entity.Property(e => e.Name).HasColumnName("name");
+            entity.Property(e => e.ServerId).HasColumnName("serverId");
             entity.Property(e => e.Timestamp)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("timestamp");
@@ -354,15 +306,11 @@ public partial class ElHubContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Error).HasColumnName("error");
             entity.Property(e => e.LogLevel).HasColumnName("logLevel");
-            entity.Property(e => e.Message)
-                .IsRequired()
-                .HasColumnName("message");
+            entity.Property(e => e.Message).HasColumnName("message");
             entity.Property(e => e.MessageId).HasColumnName("messageId");
             entity.Property(e => e.Order).HasColumnName("order");
             entity.Property(e => e.Reference).HasColumnName("reference");
-            entity.Property(e => e.ServerId)
-                .IsRequired()
-                .HasColumnName("serverId");
+            entity.Property(e => e.ServerId).HasColumnName("serverId");
             entity.Property(e => e.SessionLogId).HasColumnName("sessionLogId");
             entity.Property(e => e.StackTrace).HasColumnName("stackTrace");
             entity.Property(e => e.Time)
@@ -382,18 +330,12 @@ public partial class ElHubContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Duration).HasColumnName("duration");
-            entity.Property(e => e.Endpoint)
-                .IsRequired()
-                .HasColumnName("endpoint");
+            entity.Property(e => e.Endpoint).HasColumnName("endpoint");
             entity.Property(e => e.Error).HasColumnName("error");
             entity.Property(e => e.MessageId).HasColumnName("messageId");
-            entity.Property(e => e.MessageName)
-                .IsRequired()
-                .HasColumnName("messageName");
+            entity.Property(e => e.MessageName).HasColumnName("messageName");
             entity.Property(e => e.Order).HasColumnName("order");
-            entity.Property(e => e.ServerId)
-                .IsRequired()
-                .HasColumnName("serverId");
+            entity.Property(e => e.ServerId).HasColumnName("serverId");
             entity.Property(e => e.SessionLogId).HasColumnName("sessionLogId");
             entity.Property(e => e.Slow).HasColumnName("slow");
             entity.Property(e => e.StackTrace).HasColumnName("stackTrace");
@@ -412,12 +354,8 @@ public partial class ElHubContext : DbContext
             entity.HasIndex(e => new { e.Endpoint, e.Method }, "serverpod_method_endpoint_method_idx").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Endpoint)
-                .IsRequired()
-                .HasColumnName("endpoint");
-            entity.Property(e => e.Method)
-                .IsRequired()
-                .HasColumnName("method");
+            entity.Property(e => e.Endpoint).HasColumnName("endpoint");
+            entity.Property(e => e.Method).HasColumnName("method");
         });
 
         modelBuilder.Entity<ServerpodQueryLog>(entity =>
@@ -434,12 +372,8 @@ public partial class ElHubContext : DbContext
             entity.Property(e => e.MessageId).HasColumnName("messageId");
             entity.Property(e => e.NumRows).HasColumnName("numRows");
             entity.Property(e => e.Order).HasColumnName("order");
-            entity.Property(e => e.Query)
-                .IsRequired()
-                .HasColumnName("query");
-            entity.Property(e => e.ServerId)
-                .IsRequired()
-                .HasColumnName("serverId");
+            entity.Property(e => e.Query).HasColumnName("query");
+            entity.Property(e => e.ServerId).HasColumnName("serverId");
             entity.Property(e => e.SessionLogId).HasColumnName("sessionLogId");
             entity.Property(e => e.Slow).HasColumnName("slow");
             entity.Property(e => e.StackTrace).HasColumnName("stackTrace");
@@ -469,11 +403,9 @@ public partial class ElHubContext : DbContext
             entity.Property(e => e.LogMalformedCalls).HasColumnName("logMalformedCalls");
             entity.Property(e => e.LogServiceCalls).HasColumnName("logServiceCalls");
             entity.Property(e => e.LogSettings)
-                .IsRequired()
                 .HasColumnType("json")
                 .HasColumnName("logSettings");
             entity.Property(e => e.LogSettingsOverrides)
-                .IsRequired()
                 .HasColumnType("json")
                 .HasColumnName("logSettingsOverrides");
         });
@@ -499,9 +431,7 @@ public partial class ElHubContext : DbContext
             entity.Property(e => e.Method).HasColumnName("method");
             entity.Property(e => e.Module).HasColumnName("module");
             entity.Property(e => e.NumQueries).HasColumnName("numQueries");
-            entity.Property(e => e.ServerId)
-                .IsRequired()
-                .HasColumnName("serverId");
+            entity.Property(e => e.ServerId).HasColumnName("serverId");
             entity.Property(e => e.Slow).HasColumnName("slow");
             entity.Property(e => e.StackTrace).HasColumnName("stackTrace");
             entity.Property(e => e.Time)
@@ -521,9 +451,7 @@ public partial class ElHubContext : DbContext
             entity.HasIndex(e => new { e.UserId, e.Version }, "serverpod_user_image_user_id");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Url)
-                .IsRequired()
-                .HasColumnName("url");
+            entity.Property(e => e.Url).HasColumnName("url");
             entity.Property(e => e.UserId).HasColumnName("userId");
             entity.Property(e => e.Version).HasColumnName("version");
         });
@@ -547,15 +475,10 @@ public partial class ElHubContext : DbContext
             entity.Property(e => e.FullName).HasColumnName("fullName");
             entity.Property(e => e.ImageUrl).HasColumnName("imageUrl");
             entity.Property(e => e.ScopeNames)
-                .IsRequired()
                 .HasColumnType("json")
                 .HasColumnName("scopeNames");
-            entity.Property(e => e.UserIdentifier)
-                .IsRequired()
-                .HasColumnName("userIdentifier");
-            entity.Property(e => e.UserName)
-                .IsRequired()
-                .HasColumnName("userName");
+            entity.Property(e => e.UserIdentifier).HasColumnName("userIdentifier");
+            entity.Property(e => e.UserName).HasColumnName("userName");
         });
 
         OnModelCreatingPartial(modelBuilder);

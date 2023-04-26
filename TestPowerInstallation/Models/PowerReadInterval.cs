@@ -17,5 +17,5 @@ public partial class PowerReadInterval
 
     public DateTime PowerReadIntervalEnd { get; set; }
 
-    public virtual PowerInstallation PowerInstallation { get; set; }
+    public virtual PowerInstallation PowerInstallation { get; set; } = null!;
 }

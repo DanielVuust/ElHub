@@ -16,6 +16,7 @@ class PowerInstallation extends _i1.SerializableEntity {
     required this.name,
     this.type,
     this.owners,
+    required this.componentId,
     this.powerReadIntervals,
   });
 
@@ -30,6 +31,8 @@ class PowerInstallation extends _i1.SerializableEntity {
           serializationManager.deserialize<String?>(jsonSerialization['type']),
       owners: serializationManager
           .deserialize<List<UserInfo>?>(jsonSerialization['owners']),
+      componentId: serializationManager
+          .deserialize<String>(jsonSerialization['componentId']),
       powerReadIntervals:
           serializationManager.deserialize<List<_i2.PowerReadInterval>?>(
               jsonSerialization['powerReadIntervals']),
@@ -47,6 +50,8 @@ class PowerInstallation extends _i1.SerializableEntity {
 
   List<UserInfo>? owners;
 
+  String componentId;
+
   List<_i2.PowerReadInterval>? powerReadIntervals;
 
   @override
@@ -56,6 +61,7 @@ class PowerInstallation extends _i1.SerializableEntity {
       'name': name,
       'type': type,
       'owners': owners,
+      'componentId': componentId,
       'powerReadIntervals': powerReadIntervals,
     };
   }

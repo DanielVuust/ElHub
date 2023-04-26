@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../widgets/power_installations/my_power_installations/my_power_installations_list.dart';
+
 
 class MyPowerInstallationsScreen extends StatefulWidget {
   const MyPowerInstallationsScreen({super.key});
@@ -19,23 +21,8 @@ class _MyPowerInstallationsScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Mine installationer")),
-      body: Center(
-          child: StreamBuilder<PowerInstallationsState>(
-          stream: BlocProvider.of<PowerInstallationsBloc>(context).powerInstallationStateStream,
-          builder: (context, AsyncSnapshot<PowerInstallationsState> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.connectionState == ConnectionState.done) {
-              return const Text('done');
-            } else if (snapshot.hasError) {
-              return const Text('Error!');
-            } else if (snapshot.data == null) {
-              return const Text('No Data');
-            } else {
-              return Placeholder();
-            }
-          },
-        ),
+      body: const Center(
+          child: MyPowerInstallationsList(),
         ),
     );
   }

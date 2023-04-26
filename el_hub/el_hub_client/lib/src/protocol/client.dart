@@ -8,9 +8,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'package:el_hub_client/src/protocol/power_installation.dart' as _i3;
-import 'package:el_hub_client/src/protocol/power_read_interval.dart' as _i4;
-import 'package:serverpod_auth_client/module.dart' as _i5;
+import 'package:serverpod_auth_client/module.dart' as _i3;
+import 'package:el_hub_client/src/protocol/power_installation.dart' as _i4;
+import 'package:el_hub_client/src/protocol/power_read_interval.dart' as _i5;
 import 'dart:io' as _i6;
 import 'protocol.dart' as _i7;
 
@@ -19,6 +19,13 @@ class _EndpointLoginStatus extends _i1.EndpointRef {
 
   @override
   String get name => 'loginStatus';
+
+  _i2.Future<_i3.UserInfo> getUserInfo() =>
+      caller.callServerEndpoint<_i3.UserInfo>(
+        'loginStatus',
+        'getUserInfo',
+        {},
+      );
 }
 
 class _EndpointPowerInstallation extends _i1.EndpointRef {
@@ -27,9 +34,9 @@ class _EndpointPowerInstallation extends _i1.EndpointRef {
   @override
   String get name => 'powerInstallation';
 
-  _i2.Future<List<_i3.PowerInstallation>> getUsersPowerInstallations(
+  _i2.Future<List<_i4.PowerInstallation>> getUsersPowerInstallations(
           {DateTime? getIntervalUntilDateTime}) =>
-      caller.callServerEndpoint<List<_i3.PowerInstallation>>(
+      caller.callServerEndpoint<List<_i4.PowerInstallation>>(
         'powerInstallation',
         'getUsersPowerInstallations',
         {'getIntervalUntilDateTime': getIntervalUntilDateTime},
@@ -48,6 +55,14 @@ class _EndpointPowerInstallation extends _i1.EndpointRef {
         'createUsersPowerInstallation',
         {},
       );
+
+  _i2.Future<void> updatePowerInstallation(
+          _i4.PowerInstallation powerInstallation) =>
+      caller.callServerEndpoint<void>(
+        'powerInstallation',
+        'updatePowerInstallation',
+        {'powerInstallation': powerInstallation},
+      );
 }
 
 class _EndpointPowerReadInterval extends _i1.EndpointRef {
@@ -56,11 +71,11 @@ class _EndpointPowerReadInterval extends _i1.EndpointRef {
   @override
   String get name => 'powerReadInterval';
 
-  _i2.Future<List<_i4.PowerReadInterval>> getPowerReadIntervals(
+  _i2.Future<List<_i5.PowerReadInterval>> getPowerReadIntervals(
     int powerInstallationId, {
     DateTime? getIntervalUntilDateTime,
   }) =>
-      caller.callServerEndpoint<List<_i4.PowerReadInterval>>(
+      caller.callServerEndpoint<List<_i5.PowerReadInterval>>(
         'powerReadInterval',
         'getPowerReadIntervals',
         {
@@ -72,10 +87,10 @@ class _EndpointPowerReadInterval extends _i1.EndpointRef {
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i5.Caller(client);
+    auth = _i3.Caller(client);
   }
 
-  late final _i5.Caller auth;
+  late final _i3.Caller auth;
 }
 
 class Client extends _i1.ServerpodClient {

@@ -10,7 +10,8 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/login_status_endpoint.dart' as _i2;
 import '../endpoints/power_installation.dart' as _i3;
 import '../endpoints/power_read_interval.dart' as _i4;
-import 'package:serverpod_auth_server/module.dart' as _i5;
+import 'package:el_hub_server/src/generated/power_installation.dart' as _i5;
+import 'package:serverpod_auth_server/module.dart' as _i6;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -38,7 +39,18 @@ class Endpoints extends _i1.EndpointDispatch {
     connectors['loginStatus'] = _i1.EndpointConnector(
       name: 'loginStatus',
       endpoint: endpoints['loginStatus']!,
-      methodConnectors: {},
+      methodConnectors: {
+        'getUserInfo': _i1.MethodConnector(
+          name: 'getUserInfo',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['loginStatus'] as _i2.LoginStatusEndpoint)
+                  .getUserInfo(session),
+        )
+      },
     );
     connectors['powerInstallation'] = _i1.EndpointConnector(
       name: 'powerInstallation',
@@ -92,6 +104,25 @@ class Endpoints extends _i1.EndpointDispatch {
               (endpoints['powerInstallation'] as _i3.PowerInstallationEndpoint)
                   .createUsersPowerInstallation(session),
         ),
+        'updatePowerInstallation': _i1.MethodConnector(
+          name: 'updatePowerInstallation',
+          params: {
+            'powerInstallation': _i1.ParameterDescription(
+              name: 'powerInstallation',
+              type: _i1.getType<_i5.PowerInstallation>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['powerInstallation'] as _i3.PowerInstallationEndpoint)
+                  .updatePowerInstallation(
+            session,
+            params['powerInstallation'],
+          ),
+        ),
       },
     );
     connectors['powerReadInterval'] = _i1.EndpointConnector(
@@ -125,6 +156,6 @@ class Endpoints extends _i1.EndpointDispatch {
         )
       },
     );
-    modules['serverpod_auth'] = _i5.Endpoints()..initializeEndpoints(server);
+    modules['serverpod_auth'] = _i6.Endpoints()..initializeEndpoints(server);
   }
 }

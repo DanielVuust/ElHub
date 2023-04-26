@@ -9,7 +9,7 @@ public partial class ServerpodEmailReset
 
     public int UserId { get; set; }
 
-    public string VerificationCode { get; set; }
+    public string VerificationCode { get; set; } = null!;
 
     public DateTime Expiration { get; set; }
 }

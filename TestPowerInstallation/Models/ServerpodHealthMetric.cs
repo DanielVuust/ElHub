@@ -7,9 +7,9 @@ public partial class ServerpodHealthMetric
 {
     public int Id { get; set; }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public string ServerId { get; set; }
+    public string ServerId { get; set; } = null!;
 
     public DateTime Timestamp { get; set; }
 

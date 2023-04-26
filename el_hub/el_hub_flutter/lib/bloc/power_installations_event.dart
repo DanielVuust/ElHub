@@ -34,11 +34,16 @@ class UpdatePowerReadsEvent extends PowerInstallationsEvent {
 }
 
 @immutable
-class CreatePowerInstallationEvent extends PowerInstallationsEvent {
-  CreatePowerInstallationEvent();
+class UpdatePowerInstallationDetailsEvent extends PowerInstallationsEvent{
+  final PowerInstallation powerInstallation;
+  UpdatePowerInstallationDetailsEvent(this.powerInstallation);
   @override
   execute(PowerInstallationsState state) async {
-    _logger.d("calling CreatePowerInstallationEvent.execute");
-    await client.powerInstallation.createUsersPowerInstallation();
+    _logger.d("calling UpdatePowerInstallationDetailsEvent.execute");
+    await client.powerInstallation.updatePowerInstallation(powerInstallation);
+    state.powerInstallations = await client.powerInstallation
+        .getUsersPowerInstallations(
+            getIntervalUntilDateTime:
+                DateTime.now().subtract(const Duration(minutes: 1)));
   }
 }

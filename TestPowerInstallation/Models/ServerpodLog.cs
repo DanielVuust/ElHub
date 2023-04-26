@@ -11,21 +11,21 @@ public partial class ServerpodLog
 
     public int? MessageId { get; set; }
 
-    public string Reference { get; set; }
+    public string? Reference { get; set; }
 
-    public string ServerId { get; set; }
+    public string ServerId { get; set; } = null!;
 
     public DateTime Time { get; set; }
 
     public int LogLevel { get; set; }
 
-    public string Message { get; set; }
+    public string Message { get; set; } = null!;
 
-    public string Error { get; set; }
+    public string? Error { get; set; }
 
-    public string StackTrace { get; set; }
+    public string? StackTrace { get; set; }
 
     public int Order { get; set; }
 
-    public virtual ServerpodSessionLog SessionLog { get; set; }
+    public virtual ServerpodSessionLog SessionLog { get; set; } = null!;
 }

@@ -19,10 +19,7 @@ class AddNewPowerInstallationNavigationButton extends StatelessWidget {
               MaterialStateProperty.all(Color.fromRGBO(209, 209, 209, 1)),
         ),
         onPressed: () => {
-          BlocProvider.of<PowerInstallationsBloc>(context)
-              .eventSink
-              .add(CreatePowerInstallationEvent()),
-          Navigator.pushNamed(context, '/new_power_installation'),
+          Navigator.pushNamed(context, '/powerInstallationDetails', arguments: null),
         },
         child: Row(
           children: const [

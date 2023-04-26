@@ -16,6 +16,7 @@ class PowerInstallation extends _i1.TableRow {
     required this.name,
     this.type,
     this.owners,
+    required this.componentId,
     this.powerReadIntervals,
   }) : super(id);
 
@@ -30,6 +31,8 @@ class PowerInstallation extends _i1.TableRow {
           serializationManager.deserialize<String?>(jsonSerialization['type']),
       owners: serializationManager
           .deserialize<List<UserInfo>?>(jsonSerialization['owners']),
+      componentId: serializationManager
+          .deserialize<String>(jsonSerialization['componentId']),
       powerReadIntervals:
           serializationManager.deserialize<List<_i2.PowerReadInterval>?>(
               jsonSerialization['powerReadIntervals']),
@@ -44,6 +47,8 @@ class PowerInstallation extends _i1.TableRow {
 
   List<UserInfo>? owners;
 
+  String componentId;
+
   List<_i2.PowerReadInterval>? powerReadIntervals;
 
   @override
@@ -55,6 +60,7 @@ class PowerInstallation extends _i1.TableRow {
       'name': name,
       'type': type,
       'owners': owners,
+      'componentId': componentId,
       'powerReadIntervals': powerReadIntervals,
     };
   }
@@ -66,6 +72,7 @@ class PowerInstallation extends _i1.TableRow {
       'name': name,
       'type': type,
       'owners': owners,
+      'componentId': componentId,
     };
   }
 
@@ -76,6 +83,7 @@ class PowerInstallation extends _i1.TableRow {
       'name': name,
       'type': type,
       'owners': owners,
+      'componentId': componentId,
       'powerReadIntervals': powerReadIntervals,
     };
   }
@@ -97,6 +105,9 @@ class PowerInstallation extends _i1.TableRow {
         return;
       case 'owners':
         owners = value;
+        return;
+      case 'componentId':
+        componentId = value;
         return;
       default:
         throw UnimplementedError();
@@ -229,12 +240,15 @@ class PowerInstallationTable extends _i1.Table {
 
   final owners = _i1.ColumnSerializable('owners');
 
+  final componentId = _i1.ColumnString('componentId');
+
   @override
   List<_i1.Column> get columns => [
         id,
         name,
         type,
         owners,
+        componentId,
       ];
 }
 
