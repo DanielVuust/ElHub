@@ -11,7 +11,7 @@ class LogOutButton extends StatelessWidget {
       height: 50,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Color.fromRGBO(209, 209, 209, 1)),
+          backgroundColor: MaterialStateProperty.all(Color.fromRGBO(23, 176, 245, 1)),
           
         ),
         onPressed: () => {

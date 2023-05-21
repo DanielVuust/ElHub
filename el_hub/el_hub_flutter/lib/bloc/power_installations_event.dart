@@ -47,3 +47,18 @@ class UpdatePowerInstallationDetailsEvent extends PowerInstallationsEvent{
                 DateTime.now().subtract(const Duration(minutes: 1)));
   }
 }
+
+@immutable
+class DeletePowerInstallationDetailsEvent extends PowerInstallationsEvent{
+  final PowerInstallation powerInstallation;
+  DeletePowerInstallationDetailsEvent(this.powerInstallation);
+  @override
+  execute(PowerInstallationsState state) async {
+    _logger.d("calling DeletePowerInstallationDetailsEvent.execute");
+    await client.powerInstallation.deletePowerInstallation(powerInstallation);
+    state.powerInstallations = await client.powerInstallation
+        .getUsersPowerInstallations(
+            getIntervalUntilDateTime:
+                DateTime.now().subtract(const Duration(minutes: 1)));
+  }
+}

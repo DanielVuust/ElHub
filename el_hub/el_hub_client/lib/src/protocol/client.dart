@@ -63,6 +63,14 @@ class _EndpointPowerInstallation extends _i1.EndpointRef {
         'updatePowerInstallation',
         {'powerInstallation': powerInstallation},
       );
+
+  _i2.Future<void> deletePowerInstallation(
+          _i4.PowerInstallation powerInstallation) =>
+      caller.callServerEndpoint<void>(
+        'powerInstallation',
+        'deletePowerInstallation',
+        {'powerInstallation': powerInstallation},
+      );
 }
 
 class _EndpointPowerReadInterval extends _i1.EndpointRef {

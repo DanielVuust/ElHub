@@ -123,6 +123,25 @@ class Endpoints extends _i1.EndpointDispatch {
             params['powerInstallation'],
           ),
         ),
+        'deletePowerInstallation': _i1.MethodConnector(
+          name: 'deletePowerInstallation',
+          params: {
+            'powerInstallation': _i1.ParameterDescription(
+              name: 'powerInstallation',
+              type: _i1.getType<_i5.PowerInstallation>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['powerInstallation'] as _i3.PowerInstallationEndpoint)
+                  .deletePowerInstallation(
+            session,
+            params['powerInstallation'],
+          ),
+        ),
       },
     );
     connectors['powerReadInterval'] = _i1.EndpointConnector(

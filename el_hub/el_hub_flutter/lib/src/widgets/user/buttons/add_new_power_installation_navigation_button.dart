@@ -16,7 +16,7 @@ class AddNewPowerInstallationNavigationButton extends StatelessWidget {
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor:
-              MaterialStateProperty.all(Color.fromRGBO(209, 209, 209, 1)),
+              MaterialStateProperty.all(Color.fromRGBO(23, 176, 245, 1)),
         ),
         onPressed: () => {
           Navigator.pushNamed(context, '/powerInstallationDetails', arguments: null),

@@ -28,6 +28,13 @@ class PowerInstallationGraphStreamBuilder extends StatelessWidget {
             } else if (snapshot.data == null) {
               return const Text('No Data');
             } else {
+              if(snapshot.data?.powerInstallations.length == 0) {
+                return Container(
+                  padding: EdgeInsets.all(20),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: const Text('Du er ikke tilnkyttet nogen installationer. \nTilføj en ny installation under din profil for at komme i gang.'),
+                );
+              }
               return ListView.builder(
                 itemCount: snapshot.data?.powerInstallations.length ?? 0,
                 itemBuilder: (context, index) {

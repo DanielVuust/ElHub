@@ -29,11 +29,13 @@ class PowerInstallationsBloc
   StreamSink<PowerInstallationsEvent> get eventSink =>
       _eventStreamController.sink;
 
-  Stream<PowerInstallationsEvent?> get eventStream =>
+  Stream<PowerInstallationsEvent?> get _eventStream =>
       _eventStreamController.stream;
 
   PowerInstallationsBloc() : super(PowerInstallationsInitial()) {
-    _eventStreamController.stream.listen(_mapEventToState);
+    _eventStream.listen((event) {
+      _mapEventToState(event!);
+    });
     _currentUserPowerInstallationsState.add(state);
   }
   Future<void> _mapEventToState(PowerInstallationsEvent event) async {

@@ -65,19 +65,36 @@ class PowerInstallationDetailsForm extends StatelessWidget {
               },
               onSaved: (newValue) => powerInstallation.componentId = newValue!,
             ),
-            ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState?.validate() == true) {
-                  _formKey.currentState?.save();
-                  BlocProvider.of<PowerInstallationsBloc>(context).eventSink.add(
-                      UpdatePowerInstallationDetailsEvent(powerInstallation));
-                  Navigator.pop(context);
-                }
-              },
-              child: Container(
-                child: const Text('Gem'),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() == true) {
+                      _formKey.currentState?.save();
+                      BlocProvider.of<PowerInstallationsBloc>(context).eventSink.add(
+                          UpdatePowerInstallationDetailsEvent(powerInstallation));
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Container(
+                    child: const Text('Gem'),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    BlocProvider.of<PowerInstallationsBloc>(context).eventSink.add(
+                        DeletePowerInstallationDetailsEvent(powerInstallation));
+                    Navigator.pop(context);
+                    
+                  },
+                  child: Container(
+                    child: const Text('Slet'),
+                  ),
+                ),
+              ],
             ),
+            
           ],
         ),
       ),

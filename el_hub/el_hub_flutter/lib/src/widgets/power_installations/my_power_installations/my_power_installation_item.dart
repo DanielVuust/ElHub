@@ -9,31 +9,31 @@ class MyPowerInstallationsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color.fromRGBO(209, 209, 209, 1),
-                  boxShadow: const  [
-                    BoxShadow(
-                      color: Colors.grey,
-                      spreadRadius: 1,
-                      blurRadius: 1,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-    ),
-      child: GestureDetector(
-        onTap: () => 
-          Navigator.pushNamed(context, '/powerInstallationDetails',
-              arguments: powerInstallation), 
+    return GestureDetector(
+      onTap: () => 
+        Navigator.pushNamed(context, '/powerInstallationDetails',
+            arguments: powerInstallation),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color.fromRGBO(23, 176, 245, 1,),
+                    boxShadow: const  [
+                      BoxShadow(
+                        color: Colors.grey,
+                        spreadRadius: 1,
+                        blurRadius: 1,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+      ),
         child: Column(
           children: [
             Text(powerInstallation.name),
             Text(powerInstallation.componentId.toString()),
           ],
-        )
+        ),
       ),
     );
   }

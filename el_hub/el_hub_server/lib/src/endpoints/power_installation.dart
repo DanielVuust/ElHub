@@ -18,11 +18,10 @@ class PowerInstallationEndpoint extends Endpoint {
 
     var powerInstallations =
         await PowerInstallation.find(session, useCache: false);
-        
+
     var userId = await session.auth.authenticatedUserId;
     List<PowerInstallation> usersPowerInstallations = powerInstallations
-        .where((h) => h.owners != null &&
-            h.owners!.any((j) => j.id == userId))
+        .where((h) => h.owners != null && h.owners!.any((j) => j.id == userId))
         .toList();
     for (var element in usersPowerInstallations) {
       element.powerReadIntervals = await PowerReadIntervalEndpoint()
@@ -71,8 +70,10 @@ class PowerInstallationEndpoint extends Endpoint {
         ));
     return;
   }
-  Future<void> updatePowerInstallation(Session session, PowerInstallation powerInstallation) async {
-    if(powerInstallation.id == null){
+
+  Future<void> updatePowerInstallation(
+      Session session, PowerInstallation powerInstallation) async {
+    if (powerInstallation.id == null) {
       int? userId = await session.auth.authenticatedUserId;
       if (userId == null) {
         throw Exception('User not found');
@@ -82,17 +83,28 @@ class PowerInstallationEndpoint extends Endpoint {
         throw Exception('User not found');
       }
       await PowerInstallation.insert(
-        session,
-        PowerInstallation(
-          type: powerInstallation.type,
-          name: powerInstallation.name,
-          owners: [userInfo],
-          componentId: powerInstallation.componentId,
-        ));
-    }
-    else{
+          session,
+          PowerInstallation(
+            type: powerInstallation.type,
+            name: powerInstallation.name,
+            owners: [userInfo],
+            componentId: powerInstallation.componentId,
+          ));
+    } else {
       await PowerInstallation.update(session, powerInstallation);
-
     }
+  }
+
+  Future<void> deletePowerInstallation(
+      Session session, PowerInstallation powerInstallation) async {
+    int? userId = await session.auth.authenticatedUserId;
+    if (userId == null) {
+      throw Exception('User not found');
+    }
+    var userInfo = await Users.findUserByUserId(session, userId);
+    if (userInfo == null) {
+      throw Exception('User not found');
+    }
+    await PowerInstallation.deleteRow(session, powerInstallation);
   }
 }
