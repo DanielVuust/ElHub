@@ -3,11 +3,11 @@ part of 'power_installations_bloc.dart';
 @immutable
 abstract class PowerInstallationsEvent {
   final _logger = logger(PowerInstallationsEvent);
-  execute(PowerInstallationsState GroupEvent);
+  execute(PowerInstallationsState state);
 }
 
 @immutable
-class PowerInstallationsEventLoad extends PowerInstallationsEvent {
+class PowerInstallationsLoadEvent extends PowerInstallationsEvent {
   @override
   execute(PowerInstallationsState state) async {
     _logger.d("calling PowerInstallationsLoadEvent.execute");

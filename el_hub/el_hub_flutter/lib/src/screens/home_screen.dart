@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     BlocProvider.of<PowerInstallationsBloc>(context)
         .eventSink
-        .add(PowerInstallationsEventLoad());
+        .add(PowerInstallationsLoadEvent());
 
     updatePowerReadsEventTimer =
         Timer.periodic(const Duration(seconds: 5), (timer) {

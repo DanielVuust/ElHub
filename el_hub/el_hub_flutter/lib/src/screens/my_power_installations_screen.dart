@@ -33,6 +33,6 @@ class _MyPowerInstallationsScreenState
     //We force a update of power installations when we enter this screen, in case any db records has been changed externally.
     BlocProvider.of<PowerInstallationsBloc>(context)
         .eventSink
-        .add(PowerInstallationsEventLoad());
+        .add(PowerInstallationsLoadEvent());
   }
 }

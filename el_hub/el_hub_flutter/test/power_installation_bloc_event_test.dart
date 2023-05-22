@@ -8,7 +8,7 @@ main() {
   test("Testing PowerInstallationsEventLoad evnent load", () {
     //Setup
     PowerInstallationsState state = PowerInstallationsInitial();
-    PowerInstallationsEvent event = PowerInstallationsEventLoad();
+    PowerInstallationsEvent event = PowerInstallationsLoadEvent();
 
     //Act
     event.execute(state);
@@ -32,7 +32,7 @@ var sessionManager = SessionManager(
         powerReadIntervals: []);
     PowerInstallationsState state = PowerInstallationsInitial();
     PowerInstallationsEvent updateEvent = UpdatePowerInstallationDetailsEvent(po);
-    PowerInstallationsEvent loadEvent = PowerInstallationsEventLoad();
+    PowerInstallationsEvent loadEvent = PowerInstallationsLoadEvent();
 
     //Act
     await updateEvent.execute(state);
